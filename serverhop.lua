@@ -34,26 +34,26 @@ mainFrame.Active = true
 mainFrame.Draggable = true
 mainFrame.Parent = screenGui
 
--- Надпись с ником beladonna
-local nameLabel = Instance.new("TextLabel")
-nameLabel.Name = "UserLabel"
-nameLabel.Size = UDim2.new(1, 0, 0, 22)
-nameLabel.Position = UDim2.new(0, 0, 0, 0)
-nameLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-nameLabel.TextColor3 = Color3.fromRGB(255, 215, 0) -- Золотистый цвет
-nameLabel.Text = "beladonna"
-nameLabel.Font = Enum.Font.SourceSansBold
-nameLabel.TextSize = 15
-nameLabel.Parent = mainFrame
+-- Кнопка с ником beladonna (переключатель видимости)
+local nameButton = Instance.new("TextButton")
+nameButton.Name = "UserButton"
+nameButton.Size = UDim2.new(1, 0, 0, 25)
+nameButton.Position = UDim2.new(0, 0, 0, 0)
+nameButton.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+nameButton.TextColor3 = Color3.fromRGB(255, 215, 0) -- Золотистый цвет
+nameButton.Text = "beladonna"
+nameButton.Font = Enum.Font.SourceSansBold
+nameButton.TextSize = 15
+nameButton.Parent = mainFrame
 
 local labelCorner = Instance.new("UICorner")
 labelCorner.CornerRadius = UDim.new(0, 6)
-labelCorner.Parent = nameLabel
+labelCorner.Parent = nameButton
 
 local labelStroke = Instance.new("UIStroke")
 labelStroke.Thickness = 1
 labelStroke.Color = Color3.fromRGB(255, 215, 0)
-labelStroke.Parent = nameLabel
+labelStroke.Parent = nameButton
 
 -- Кнопка Server Hop
 local button = Instance.new("TextButton")
@@ -75,6 +75,11 @@ local uiStroke = Instance.new("UIStroke")
 uiStroke.Thickness = 1.5
 uiStroke.Color = Color3.fromRGB(80, 80, 80)
 uiStroke.Parent = button
+
+-- Переключение видимости кнопки при нажатии на beladonna
+nameButton.MouseButton1Click:Connect(function()
+    button.Visible = not button.Visible
+end)
 
 -- Логика переподключения на другой сервер
 local function serverHop()
