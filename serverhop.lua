@@ -15,7 +15,6 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "ServerHopGui"
 screenGui.ResetOnSpawn = false
 
--- Привязка к защищенному родителю (в зависимости от экзекутора)
 if gethui then
     screenGui.Parent = gethui()
 elseif syn and syn.protect_gui then
@@ -25,19 +24,48 @@ else
     screenGui.Parent = CoreGui
 end
 
--- Создание кнопки
+-- Основной контейнер для перемещения
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 160, 0, 75)
+mainFrame.Position = UDim2.new(0.5, -80, 0.1, 0)
+mainFrame.BackgroundTransparency = 1
+mainFrame.Active = true
+mainFrame.Draggable = true
+mainFrame.Parent = screenGui
+
+-- Надпись с ником beladonna
+local nameLabel = Instance.new("TextLabel")
+nameLabel.Name = "UserLabel"
+nameLabel.Size = UDim2.new(1, 0, 0, 22)
+nameLabel.Position = UDim2.new(0, 0, 0, 0)
+nameLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+nameLabel.TextColor3 = Color3.fromRGB(255, 215, 0) -- Золотистый цвет
+nameLabel.Text = "beladonna"
+nameLabel.Font = Enum.Font.SourceSansBold
+nameLabel.TextSize = 15
+nameLabel.Parent = mainFrame
+
+local labelCorner = Instance.new("UICorner")
+labelCorner.CornerRadius = UDim.new(0, 6)
+labelCorner.Parent = nameLabel
+
+local labelStroke = Instance.new("UIStroke")
+labelStroke.Thickness = 1
+labelStroke.Color = Color3.fromRGB(255, 215, 0)
+labelStroke.Parent = nameLabel
+
+-- Кнопка Server Hop
 local button = Instance.new("TextButton")
 button.Name = "HopButton"
-button.Size = UDim2.new(0, 160, 0, 45)
-button.Position = UDim2.new(0.5, -80, 0.1, 0)
+button.Size = UDim2.new(1, 0, 0, 45)
+button.Position = UDim2.new(0, 0, 0, 28)
 button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 button.TextColor3 = Color3.fromRGB(255, 255, 255)
 button.Text = "Server Hop"
 button.Font = Enum.Font.SourceSansBold
 button.TextSize = 18
-button.Active = true
-button.Draggable = true
-button.Parent = screenGui
+button.Parent = mainFrame
 
 local uiCorner = Instance.new("UICorner")
 uiCorner.CornerRadius = UDim.new(0, 8)
@@ -48,7 +76,7 @@ uiStroke.Thickness = 1.5
 uiStroke.Color = Color3.fromRGB(80, 80, 80)
 uiStroke.Parent = button
 
--- Функция переподключения
+-- Логика переподключения на другой сервер
 local function serverHop()
     button.Text = "Поиск..."
     local placeId = game.PlaceId
